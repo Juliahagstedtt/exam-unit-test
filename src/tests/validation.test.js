@@ -12,25 +12,70 @@ const exampleCartObject = {
 	item: exampleProduct
 }
 
-// Group tests using "describe"
-describe('Validation', () => {
-
-	// Använd en "test" eller "it" (de är synonymer) för varje testfall
-	/* Exempel på syntax:
-	test('beskriv testfallet', () => {
-		// här skriver du testkoden
-		// avsluta alltid med "expect"
+// Test för Validering
+describe('isCartItem', () => {
+	test('rätt ska ge true', () => {
+		const input = exampleCartObject;
+		const expected = true;
+		const actual = isCartItem(input);
+		expect(actual).toBe(expected)
 	})
-	*/
 
 
-	// ---------------------------------------------
-	// Följande testfall ska du implementera. Det är tillåtet att använda Joi. Gör i så fall ett schema för varje sorts objekt du vill kunna validera. Du får även ändra texten och du t.ex. vill skriva på svenska i stället för engelska.
-	// (Ta bort dessa kommentarer när du är klar)
 
-	// 1. it returns true for a valid cart object
-	// 2. it returns false for invalid cart objects
-
-	// 3. it returns true for a valid product
-	// 4. it returns false for invalid cart objects
+	test('fel ska ge false', () => {
+		const input = { id: 2001, };
+		const expected = false;
+		const actual = isCartItem(input);
+		expect(actual).toBe(expected)
+	})
+	
 })
+
+describe('isProduct', () => {
+	test('rätt ska ge true', () => {
+		const input = exampleProduct;
+		const expected = true;
+		const actual = isProduct(input);
+		expect(actual).toBe(expected)
+	})
+
+
+
+	test('fel ska ge false', () => {
+		const input = {id: 1001};
+		const expected = false;
+		const actual = isProduct(input);
+		expect(actual).toBe(expected)
+	})
+
+})
+
+
+
+
+
+
+
+// Group tests using "describe"
+// describe('Validation', () => {
+
+// 	// Använd en "test" eller "it" (de är synonymer) för varje testfall
+// 	/* Exempel på syntax:
+// 	test('beskriv testfallet', () => {
+// 		// här skriver du testkoden
+// 		// avsluta alltid med "expect"
+// 	})
+// 	*/
+
+
+// 	// ---------------------------------------------
+// 	// Följande testfall ska du implementera. Det är tillåtet att använda Joi. Gör i så fall ett schema för varje sorts objekt du vill kunna validera. Du får även ändra texten och du t.ex. vill skriva på svenska i stället för engelska.
+// 	// (Ta bort dessa kommentarer när du är klar)
+
+// 	// 1. it returns true for a valid cart object
+// 	// 2. it returns false for invalid cart objects
+
+// 	// 3. it returns true for a valid product
+// 	// 4. it returns false for invalid cart objects
+// })

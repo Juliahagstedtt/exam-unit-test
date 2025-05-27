@@ -1,3 +1,6 @@
+import { isCartItem, isProduct } from "./validation.js"
+
+
 /*
 Din uppgift:
 - skriv testfall för alla funktionerna nedan i cart.test.js (RED)
@@ -16,8 +19,6 @@ Tips:
 // function editCart(itemId, newValues)
 // function clearCart()
 // -------------------------------------------------- //
-
-import { isCartItem, isProduct } from "./validation.js"
 
 let cart = []
 let idCounter = 2002
