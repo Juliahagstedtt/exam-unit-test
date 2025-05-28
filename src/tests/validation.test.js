@@ -14,7 +14,7 @@ const exampleCartObject = {
 
 // Test för Validering
 describe('isCartItem', () => {
-	test('rätt ska ge true', () => {
+	test('returnera true om cartitem är giltig', () => {
 		const input = exampleCartObject;
 		const expected = true;
 		const actual = isCartItem(input);
@@ -23,7 +23,7 @@ describe('isCartItem', () => {
 
 
 
-	test('fel ska ge false', () => {
+	test('returnera false  om cartitem är ogiltig', () => {
 		const input = { id: 2001, };
 		const expected = false;
 		const actual = isCartItem(input);
@@ -33,7 +33,7 @@ describe('isCartItem', () => {
 })
 
 describe('isProduct', () => {
-	test('rätt ska ge true', () => {
+	test('returnerar true om produkten är giltig', () => {
 		const input = exampleProduct;
 		const expected = true;
 		const actual = isProduct(input);
@@ -42,7 +42,7 @@ describe('isProduct', () => {
 
 
 
-	test('fel ska ge false', () => {
+	test('returnerar false om produkten är ogiltig', () => {
 		const input = {id: 1001};
 		const expected = false;
 		const actual = isProduct(input);
