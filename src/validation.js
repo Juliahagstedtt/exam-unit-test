@@ -31,6 +31,8 @@ if (!isProduct(maybeCartItem.item)) {
     return true;
 }
 
+
+
 // Kollar om de är en produkt
 function isProduct(maybeProduct) {
 // Blir false om maybeProduct inte är ett objekt eller om de är null eller en array

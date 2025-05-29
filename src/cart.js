@@ -11,18 +11,10 @@ Tips:
 - om du testar t.ex. removeFromCart får du använda addToCart i början av testet. Den kommer nämligen ha sina egna tester
 
 */
-// function getCartItemCount()
-// function getItem(index)
-// function getTotalCartValue()
-// function addToCart(newItem)
-// function removeFromCart(itemId)
-// function editCart(itemId, newValues)
-// function clearCart()
-// -------------------------------------------------- //
+
 
 let cart = []
 let idCounter = 2002
-// -------------------------------------------------- //
 
 
 // Din kod börjar här
@@ -42,6 +34,31 @@ function addToCart(newItem) {
 	cart.push(cartItem)
 }
 
+// function getCartItemCount() {
 
+// }
+function getItem(index) {
+
+}
+// function getTotalCartValue() {
+
+// }
+// function addToCart(newItem) {
+
+// }
+
+function getCartValue() {
+	
+}
+
+function removeFromCart(itemId) {
+
+}
+function editCart(itemId, newValues) {
+
+}
+function clearCart() {
+	
+}
 
 export { getCartItemCount, addToCart }
