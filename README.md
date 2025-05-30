@@ -51,11 +51,12 @@ Det finns två sorters objekt: "cart item" och "product". Exempel på giltiga ob
 
 ### Kundvagn
 Testa funktionerna:
-1. function getCartItemCount()
-1. function getCartValue()
+1. function getCartItemCount() - antalet olika items
+1. function getItem(index)
+1. function getTotalCartValue() - sammanlagda värdet av alla produkter i kundvagnen
 1. function addToCart(newItem)
 1. function removeFromCart(itemId)
-1. function editCart(itemId, newValues)
+1. function editCart(itemId, newValues) - ändra antal produkter
 1. function clearCart()
 
 *newValues ska vara ett objekt som innehåller allt som ska ändras. Det behöver inte vara ett komplett cart-objekt.*
