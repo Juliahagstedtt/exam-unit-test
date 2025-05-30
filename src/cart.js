@@ -92,7 +92,7 @@ function editCart(itemId, newValues) {
 
 	// Om antalet är mer än 0, uppdatera mängden (amount) på produkten
 	} else if (newValues.amount > 0) {
-		cart[index].amount = newValues.amount // Ändrar antelt produkter till de nya värdet
+		cart[index].amount = newValues.amount // Ändrar antalet produkter till de nya värdet
 		return true
 	} 
 	// Returnera false om allt där ovan inte är uppfylt (en säkerhetåtgärd ifall ingen av de ovan är uppfyllda)

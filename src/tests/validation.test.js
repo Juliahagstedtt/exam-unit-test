@@ -27,8 +27,8 @@ describe('isCartItem', () => {
 	test('returnera false  om cartitem är ogiltig', () => {
 		const input = { id: 2001, }; //exempel på ett ogiltigt input där information saknas
 		const expected = false; //Om de är ogiltigt förväntas false
-		const actual = isCartItem(input);
-		expect(actual).toBe(expected)
+		const actual = isCartItem(input); //Funktionen kör med input
+		expect(actual).toBe(expected)// jämför med de som förväntades
 	})
 	
 })
@@ -37,9 +37,9 @@ describe('isProduct', () => {
 	// Blir true om produkten är giltig
 	test('returnerar true om produkten är giltig', () => {
 		const input = exampleProduct;
-		const expected = true;
-		const actual = isProduct(input);
-		expect(actual).toBe(expected)
+		const expected = true; // förväntar att funktionen returnerar true om allt är giltigt
+		const actual = isProduct(input); //Funktionen kör med input
+		expect(actual).toBe(expected)// jämför med de som förväntades
 	})
 
 
@@ -47,9 +47,9 @@ describe('isProduct', () => {
 	test('returnerar false om produkten är ogiltig', () => {
 		// Blir false om produkten är ogiltig (om de saknas något)
 		const input = {id: 1001};
-		const expected = false;
-		const actual = isProduct(input);
-		expect(actual).toBe(expected)
+		const expected = false; // förväntar att funktionen returnerar true om allt är giltigt
+		const actual = isProduct(input); //Funktionen kör med input
+		expect(actual).toBe(expected)// jämför med de som förväntades
 	})
 
 })
