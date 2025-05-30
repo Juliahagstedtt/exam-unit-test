@@ -21,7 +21,7 @@ let idCounter = 2002
 // Du får en funktion att börja med
 
 function getCartItemCount() {
-	throw new Error('TODO')
+	return  cart.length;
 }
 
 function addToCart(newItem) {
@@ -34,31 +34,60 @@ function addToCart(newItem) {
 	cart.push(cartItem)
 }
 
-// function getCartItemCount() {
 
-// }
 function getItem(index) {
-
+	return cart[index];
 }
-// function getTotalCartValue() {
 
-// }
-// function addToCart(newItem) {
 
-// }
+function getTotalCartValue() {
+	let total = 0
 
-function getCartValue() {
-	
+	// Loop
+	for (let i = 0; i < cart.length; i++) {
+		const cartItem = cart[i];
+		total += cartItem.item.price * cartItem.amount;
+	}
+
+	return total;
 }
+
+
 
 function removeFromCart(itemId) {
-
+	const index = cart.findIndex(item => item.id === itemId)
+	if (index === -1) {
+		return false;
+	}
+	cart.splice(index, 1)
+	return true
 }
+
+
+
 function editCart(itemId, newValues) {
+	const index = cart.findIndex(item => item.id === itemId)
+	if (index === -1) {
+		return false;
+	}
 
+	if (newValues.amount === 0) {
+		cart.splice(index, 1)
+		return true
+
+	} else if (newValues.amount > 0) {
+		cart[index].amount = newValues.amount
+		return true
+	} 
+
+	return false
 }
+
+
+
 function clearCart() {
-	
+	cart = [];
 }
 
-export { getCartItemCount, addToCart }
+
+export { getCartItemCount, addToCart, getItem, getTotalCartValue, removeFromCart, editCart, clearCart }

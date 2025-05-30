@@ -52,7 +52,7 @@ Det finns två sorters objekt: "cart item" och "product". Exempel på giltiga ob
 ### Kundvagn
 Testa funktionerna:
 1. function getCartItemCount()
-1. function getCartValue()
+1. function getTotalCartValue()
 1. function addToCart(newItem)
 1. function removeFromCart(itemId)
 1. function editCart(itemId, newValues)

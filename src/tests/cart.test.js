@@ -1,12 +1,12 @@
 // importera här
-import { getCartItemCount, addToCart, getItem, getCartValue, removeFromCart, editCart, clearCart } from "../cart"
+import { getCartItemCount, addToCart, getItem, getTotalCartValue, removeFromCart, editCart, clearCart, getTotalCartValue } from "../cart"
 import { isProduct } from "../validation"
 
 
 describe('Cart', () => {
 	beforeEach(() => {
 		// Denna kod körs före varje test. Det är för att rensa kundvagnen, så inte saker ligger kvar från föregående test.
-		clearCart()
+		clearCart() // Säkerställer att varukrogen är tom
 	})
 
 
@@ -16,7 +16,7 @@ describe('Cart', () => {
 		const input = { id: 1002, name: 'Vattenpistol', price: 40 }
 		// addToCart returnerar inget - den påverkar kundvagnen
 		// vi behöver använda getCartItemCount för att se om det har lagts till en ny produkt i kundvagnen
-		addToCart(input)
+		addToCart(input) //Lägger till produkten
 		const itemCountAfter = getCartItemCount()
 		expect(itemCountAfter).toBe(itemCountBefore + 1)
 	})
@@ -27,7 +27,7 @@ describe('Cart', () => {
 
 	describe('getCartItemCount', () => {
 		test('returnerar 0 när de är tomt i cart', () => {
-			clearCart()
+			clearCart() // Säkerställer att varukrogen är tom
 			const expected = 0;
 			const actual = getCartItemCount();
 			expect(actual).toBe(expected)
@@ -60,19 +60,18 @@ describe('Cart', () => {
 		})
 	})
 
-
-	describe('getCartValue', () => {
+	describe('getTotalCartValue', () => {
 		test('visar det totala i vaurkorgen', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 }
 			addToCart(produkt)
 
 			const expected = 12;
-			const actual = getCartValue();
+			const actual = getTotalCartValue();
 			expect(actual).toBe(expected)
 		})
 		test('returnerar 0 kr närt varukorgen är tom', () => {
 			const expected = 0;
-			const actual = getCartValue();
+			const actual = getTotalCartValue();
 			expect(actual).toBe(expected)
 		})
 	})
@@ -138,7 +137,7 @@ describe('Cart', () => {
 		test('här rensas varukorgen', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 }
 			addToCart(produkt)
-			clearCart()
+			clearCart() // Säkerställer att varukrogen är tom
 			const actual = getCartItemCount();
 			expect(actual).toBe(0)
 		})
