@@ -3,6 +3,8 @@ import { getCartItemCount, addToCart, getItem, getTotalCartValue, removeFromCart
 import { isProduct } from "../validation"
 
 
+
+
 describe('Cart', () => {
 	beforeEach(() => {
 		// Denna kod körs före varje test. Det är för att rensa kundvagnen, så inte saker ligger kvar från föregående test.
@@ -16,7 +18,7 @@ describe('Cart', () => {
 		const input = { id: 1002, name: 'Vattenpistol', price: 40 }
 		// addToCart returnerar inget - den påverkar kundvagnen
 		// vi behöver använda getCartItemCount för att se om det har lagts till en ny produkt i kundvagnen
-		addToCart(input) //Lägger till produkten
+		addToCart(input) // Lägger till produkten
 		const itemCountAfter = getCartItemCount()
 		expect(itemCountAfter).toBe(itemCountBefore + 1)
 	})
@@ -35,7 +37,7 @@ describe('Cart', () => {
 		
 		test('returnerar antal produkter i varukorgen', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
-			addToCart(produkt)
+			addToCart(produkt) //Lägger till produkt i varukorgen
 
 			const expected = 1;
 			const actual = getCartItemCount();
@@ -49,7 +51,7 @@ describe('Cart', () => {
 	describe('getItem', () => {
 		test('returnerar ett objekt om index finns', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
-			addToCart(produkt)
+			addToCart(produkt) //Lägger till produkt i varukorgen
 
 			const result = getItem(0)
 			expect(result.item).toEqual(produkt)
@@ -63,7 +65,7 @@ describe('Cart', () => {
 	describe('getTotalCartValue', () => {
 		test('visar det totala i vaurkorgen', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
-			addToCart(produkt)
+			addToCart(produkt) //Lägger till produkt i varukorgen
 
 			const expected = 12;
 			const actual = getTotalCartValue();
@@ -82,7 +84,7 @@ describe('Cart', () => {
 		test('ta bort objekt från cart', () => {
 			// Todo: här behöver jag lägga till addtocart
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
-			addToCart(produkt)
+			addToCart(produkt) //Lägger till produkt i varukorgen
 
 			const cartItem = getItem(0)
 			const itemId = cartItem.id
@@ -104,33 +106,34 @@ describe('Cart', () => {
 	describe('editCart', () => {
 		test('ändrar antalet produkter i varukorg', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
-			addToCart(produkt)
+			addToCart(produkt) //Lägger till produkt i varukorgen
 
-			const cartItem = getItem(0)
-			const itemId = cartItem.id
+			const cartItem = getItem(0) //Hämtar det första som finns i varukorgen
+			const itemId = cartItem.id //Hämtar id på objektet
 
 			const expected = true;
-			const actual = editCart(itemId, { amount: 4 });
-			expect(actual).toBe(expected)
+			const actual = editCart(itemId, { amount: 4 }); // Försöker ändra antelt till något annat som t.ex 4 
+			expect(actual).toBe(expected) // Förväntar att ändringen lyckas och att de då blir true
 		})
 		test('ta bort produkt från varukorg', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
-			addToCart(produkt)
+			addToCart(produkt) // Lägger till produkt i varukorgen
 
-			const cartItem = getItem(0)
-			const itemId = cartItem.id
+			const cartItem = getItem(0) // Hämtar produkten vi nyss la till i varukorgen
+			const itemId = cartItem.id // Hämtar id på objektet
 
 			const expected = true;
-			const actual = editCart(itemId, { amount: 0 });
-			expect(actual).toBe(expected)
+			const actual = editCart(itemId, { amount: 0 }); // Försöker ta bort produkten 
+			expect(actual).toBe(expected) // Förväntar att produkten tas bort
 		})
 		test('returnerar false om produkten inte finns', () => {
 			const expected = false;
-			const actual = editCart(8989, { amount: 10 });
-			expect(actual).toBe(expected)
+			const actual = editCart(8989, { amount: 10 }); //Tetsar med ett ogiltigt id exempel
+			expect(actual).toBe(expected) // Förväntar false eftersom att produkten inte finns
 		})
 	})
-		// -------------------------------------------------- //
+
+
 
 //Testar så att clearCart har rensat allt från varukorgen
 	describe('clearCart', () => {
