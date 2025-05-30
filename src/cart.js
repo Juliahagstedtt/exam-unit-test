@@ -29,9 +29,15 @@ function addToCart(newItem) {
 		return false
 	}
 
-	const cartItem = { id: idCounter, amount: 1, item: newItem }
-	idCounter++
-	cart.push(cartItem)
+	const newId = idCounter
+	const index = cart.findIndex(item => item.id === newId)
+	if( index === -1 ) {
+		const cartItem = { id: idCounter, amount: 1, item: newItem }
+		idCounter++
+		cart.push(cartItem)
+	} else {
+		cart[index].amount++
+	}
 }
 
 
