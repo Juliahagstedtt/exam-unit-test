@@ -1,6 +1,5 @@
 import { isCartItem, isProduct } from "./validation.js"
 
-
 /*
 Din uppgift:
 - skriv testfall för alla funktionerna nedan i cart.test.js (RED)
@@ -11,14 +10,11 @@ Tips:
 - om du testar t.ex. removeFromCart får du använda addToCart i början av testet. Den kommer nämligen ha sina egna tester
 
 */
-
+// Din kod börjar här
+// Du får en funktion att börja med
 
 let cart = []
 let idCounter = 2002
-
-
-// Din kod börjar här
-// Du får en funktion att börja med
 
 function getCartItemCount() {
 	return  cart.length;
@@ -90,9 +86,9 @@ function editCart(itemId, newValues) {
 }
 
 
-
+// Tömmer varukorgen genom att sätta den till en tom array
 function clearCart() {
-	cart = [];
+	cart = []; //Tom Array
 }
 
 
