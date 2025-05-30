@@ -30,7 +30,7 @@ function addToCart(newItem) {
 	}
 
 	const newId = idCounter
-	const index = cart.findIndex(item => item.id === newId)
+	const index = cart.findIndex(ci => ci.item.id === newItem.id)
 	if( index === -1 ) {
 		const cartItem = { id: idCounter, amount: 1, item: newItem }
 		idCounter++
