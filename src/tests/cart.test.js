@@ -8,8 +8,8 @@ describe('Cart', () => {
 		clearCart() // Nollställer varukorgen
 	})
 
-
-	// Du får ett test att börja med
+	// Testar funktionen addToCart, som lägger till produkter i kundvagnen.
+	// Här kontrolleras att produkten verkligen läggs till och att antal i kundvagnen ökar.
 	test('addToCart lägger till en ny produkt i kundvagnen', () => {
 		const itemCountBefore = getCartItemCount() // Sparar antal produkter innan något läggs till 
 		const input = { id: 1002, name: 'Vattenpistol', price: 40 } // Testprodukt 
@@ -24,15 +24,18 @@ describe('Cart', () => {
 
 	
 
-
+	// Testar funktionen getCartItemCount, som räknar hur många produkter som finns i kundvagnen.
 	describe('getCartItemCount', () => {
+
+		// Testar att funktionen returnerar 0 om vagnen är tom
 		test('returnerar 0 när de är tomt i cart', () => {
 			clearCart() // Säkerställer att varukorgen är tom
 			const expected = 0; // Förväntat antal produkter 
 			const actual = getCartItemCount(); // Hämtar antal produkter i varukorgen 
 			expect(actual).toBe(expected) // Kontroll att funktionen returnerar 0 när inget finns 
 		})
-		
+
+		// Testar att funktionen visar rätt antal när vi har lagt till något
 		test('returnerar antal produkter i varukorgen', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
 			addToCart(produkt) //Lägger till produkt i varukorgen
@@ -44,8 +47,10 @@ describe('Cart', () => {
 	})
 
 
-
+	// Testar funktionen getItem, som hämtar en produkt från ett visst index i kundvagnen.
 	describe('getItem', () => {
+
+		// Testar att man kan hämta ett objekt som finns
 		test('returnerar ett objekt om index finns', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
 			addToCart(produkt) //Lägger till produkt i varukorgen
@@ -53,6 +58,8 @@ describe('Cart', () => {
 			const result = getItem(0) // Hämtar de första objektet i varukorgen (index 0)
 			expect(result.item).toEqual(produkt) // Kontroll att produkten som hämtas är exakt den som tidigare lades till varukorgen
 		})
+
+		// Testar att man får undefined om man försöker hämta något som inte finns
 		test('returnerar undefined om index inte finns', () => {
 			const result = getItem(21) // Försöker hämta ett objekt från ett index som inte existerar
 			expect(result).toBeUndefined() // Förväntar resultatet att vara undefined eftersom att indexet är ogiltigt
@@ -60,8 +67,10 @@ describe('Cart', () => {
 	})
 
 
-
+	// Testar funktionen getTotalCartValue, som räknar ihop det totala värdet av kundvagnen.
 	describe('getTotalCartValue', () => {
+
+		// Testar att totalen blir rätt med en produkt
 		test('visar det totala i varukorgen', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
 			addToCart(produkt) //Lägger till produkt i varukorgen
@@ -71,6 +80,8 @@ describe('Cart', () => {
 
 			expect(actual).toBe(expected) // Förväntar att värdet ska vara 12
 		})
+
+		// Testar att funktionen returnerar 0 om vagnen är tom
 		test('returnerar 0 kr när varukorgen är tom', () => {
 			// Ingen produkt har lagts till, så värdet är 0
 
@@ -82,8 +93,10 @@ describe('Cart', () => {
 	})
 
 
-
+	// Testar funktionen removeFromCart, som tar bort en produkt från kundvagnen med hjälp av dess id.
 	describe('removeFromCart', () => {
+
+		// Testar att man kan ta bort en produkt som finns
 		test('ta bort objekt från cart', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
 			addToCart(produkt) // Lägger till produkt i varukorgen
@@ -96,7 +109,7 @@ describe('Cart', () => {
 
 			expect(actual).toBe(expected) // Ska returnera true om borttagningen lyckades
 		})
-		// Testar att funktionen hanterar ogiltiga id t.ex om inte produkten finns
+		// Testar att funktionen hanterar ogiltiga id korrekt, t.ex om inte produkten finns
 		test('returnera false om objekt inte finns', () => {
 
 			const expected = false; // Förväntar false om produkten inte finns
@@ -107,8 +120,10 @@ describe('Cart', () => {
 	})
 
 
-
+	// Testar funktionen editCart, som ändrar antal på en viss produkt, eller tar bort den om antalet blir 0.
 	describe('editCart', () => {
+
+		// Testar att man kan ändra antalet på en produkt
 		test('ändrar antalet produkter i varukorg', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
 			addToCart(produkt) //Lägger till produkt i varukorgen
@@ -120,6 +135,8 @@ describe('Cart', () => {
 			const actual = editCart(itemId, { amount: 4 }); // Försöker ändra antalet till något annat som t.ex 4 
 			expect(actual).toBe(expected) // Förväntar att ändringen lyckas och att de då blir true
 		})
+
+		// Testar att sätta amount till 0 tar bort produkten
 		test('ta bort produkt från varukorg', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
 			addToCart(produkt) // Lägger till produkt i varukorgen
@@ -131,6 +148,8 @@ describe('Cart', () => {
 			const actual = editCart(itemId, { amount: 0 }); // Försöker ta bort produkten 
 			expect(actual).toBe(expected) // Förväntar att produkten tas bort
 		})
+
+		// Testar att returnera false om produkten inte finns
 		test('returnerar false om produkten inte finns', () => {
 			const expected = false;
 			const actual = editCart(8989, { amount: 10 }); //Testar med ett ogiltigt id exempel
@@ -140,7 +159,7 @@ describe('Cart', () => {
 
 
 
-//Testar så att clearCart har rensat allt från varukorgen
+	// Testar funktionen clearCart, som rensar hela varukorgen och gör den tom.
 	describe('clearCart', () => {
 		test('här rensas varukorgen', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
