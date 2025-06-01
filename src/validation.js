@@ -1,60 +1,70 @@
-// Remember to use RED, GREEN, REFACTOR
-// 1. pick one test case in validation.test.js
-// 2. write the code, verify that the test is RED
-// 3. write code in this file so that the test case becomes GREEN
-// 4. refactor as neccessary before you move on to the next
-// 5. repeat
+// RED, GREEN, REFACTOR
+// RED = skriv ett test som misslyckas
+// GREEN = implementera kod som får testet att passera
+// REFACTOR = förbättra koden utan att ändra funktionalitet
 
-
-//Kollar om de är en kundvagnsvara
+// Den här funktionen kollar om något är en vara i kundvagnen och att allt som behövs finns med. 
+// Den säger true om id, antal och item (själva produkten) finns och är korrekt, annars blir de false.
 function isCartItem(maybeCartItem) {
-// Blir false om maybeCartItem inte är ett objekt eller om de är null eller en array
+
+// Kollar att maybeCartItem är en vanlig sak med delar som id, amount och item
+// Blir false om maybeCartItem inte är ett objekt, är null eller en lista (array)
 if (typeof maybeCartItem !== 'object' ||
     maybeCartItem === null ||
     Array.isArray(maybeCartItem)
 ) {
     return false;
 }
-// Blir false om id inte är number
+
+// Returnera false om id inte är number
 if (typeof maybeCartItem.id !== 'number') {
     return false;
 }
-// Blir false om amount inte är number
+// Returnera false om amount inte är number
 if (typeof maybeCartItem.amount !== 'number') {
     return false;
 }
-// Blir false om item inte är en giltig produkt
+
+// Kollar att item (produkten i kundvagnen) är en riktig produkt med id, namn och pris, annars returnera false
+// Vi använder isProduct här eftersom en kundvagnsvara måste innehålla en giltig produkt
 if (!isProduct(maybeCartItem.item)) {
     return false;
 }
-// Blir true om allt stämmer
+
+// Returnera true om allt stämmer
     return true;
 }
 
 
 
-// Kollar om de är en produkt
+
+
+// Den här funktionen kollar om något är en riktig produkt. 
+// Den säger true om det finns ett id, ett namn och ett pris, annars blir de false
 function isProduct(maybeProduct) {
-// Blir false om maybeProduct inte är ett objekt eller om de är null eller en array
+
+// Kollar att maybeProduct är vanlig sak med egenskaper, som t.ex. id, namn och pris
+// Blir false om maybeProduct inte är ett objekt, är null eller en lista (array)
 if (typeof maybeProduct !== 'object' ||
     maybeProduct === null ||
     Array.isArray(maybeProduct)
 ) {
     return false;
 }
-// Blir false om id inte är number
+
+// Returnera false om id inte är nummer (number)
 if (typeof maybeProduct.id !== 'number') {
     return false;
 }
-// Blir false om name inte är text (string)
+// Returnera false om name inte är text (string)
 if (typeof maybeProduct.name !== 'string') {
     return false;
 }
-// Blir false om price inte är number
+// Returnera false om price inte är nummer (number)
 if (typeof maybeProduct.price !== 'number') {
     return false;
 }
-// Blir true om allt stämmer
+// Returnera true om allt stämmer
     return true;
 }
 

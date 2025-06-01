@@ -1,6 +1,5 @@
 // importera här
 import { getCartItemCount, addToCart, getItem, getTotalCartValue, removeFromCart, editCart, clearCart } from "../cart"
-import { isProduct } from "../validation"
 
 
 describe('Cart', () => {

@@ -1,34 +1,42 @@
 import { isCartItem, isProduct } from "../validation.js"
-// Examples of a valid product and a valid cart item. You may use these when testing below.
+
+// Exempel på en giltig produkt: har id, namn och pris
 const exampleProduct = {
 	id: 1001,
 	name: 'Badanka',
 	price: 500
 }
 
+
+// Exempel på en giltig vara i kundvagnen: har id, antal och ett item (en produkt), i detta fall är (exampleProduct)
 const exampleCartObject = {
 	id: 2001,
 	amount: 1,
 	item: exampleProduct
 }
 
-// Test för Validering
+// Tester för funktionen isCartItem, kontrollerar om ett objekt är en giltig kundvagnsvara
 describe('isCartItem', () => {
-	// Blir true om kundvangsvaran som skickas in är giltig
+
+	// Returnera true om objektet är en korrekt kundvagnsvara (objektet är exampleCartObject)
 	test('returnera true om cartitem är giltig', () => {
-		const input = exampleCartObject; // giltig exempel av kundvagnsvara
+		const input = exampleCartObject; // giltig kundvagnsvara
 		const expected = true; // förväntar att funktionen returnerar true om allt är giltigt
-		const actual = isCartItem(input); //Funktionen kör med input
+		const actual = isCartItem(input); // Funktionen kör med input
 		expect(actual).toBe(expected) // jämför med de som förväntades
 	})
 
 
-	// Blir false om kundvangsvaran som skickas in är ogiltig
+	// Ska returnera false om något är fel eller saknas som t.ex id, mängd och item
 	test('returnera false  om cartitem är ogiltig', () => {
+		
 		const input = { id: 2001, }; //exempel på ett ogiltigt input där information saknas
-		const expected = false; //Om de är ogiltigt förväntas false
-		const actual = isCartItem(input); //Funktionen kör med input
-		expect(actual).toBe(expected)// jämför med de som förväntades
+
+		const expected = false; // Om de är ogiltigt förväntas false
+
+		const actual = isCartItem(input); // Validerar input med funktionen isCartItem, för att se om det är en giltig kundvagnsvara
+
+		expect(actual).toBe(expected) // Jämför resultatet (actual) med det förväntade värdet (expected), vilket är false
 	})
 	
 })
@@ -39,17 +47,16 @@ describe('isProduct', () => {
 		const input = exampleProduct;
 		const expected = true; // förväntar att funktionen returnerar true om allt är giltigt
 		const actual = isProduct(input); //Funktionen kör med input
-		expect(actual).toBe(expected)// jämför med de som förväntades
+		expect(actual).toBe(expected)// jämför med de som förväntades (true)
 	})
 
 
-
+// Blir false om produkten är ogiltig (t.ex. om något saknas, som id, namn eller pris)
 	test('returnerar false om produkten är ogiltig', () => {
-		// Blir false om produkten är ogiltig (om de saknas något)
-		const input = {id: 1001};
-		const expected = false; // förväntar att funktionen returnerar true om allt är giltigt
-		const actual = isProduct(input); //Funktionen kör med input
-		expect(actual).toBe(expected)// jämför med de som förväntades
+		const input = {id: 1001}; // Ogiltig produkt, saknar namn och pris
+		const expected = false; // förväntar false eftersom produkten är ofullständing 
+		const actual = isProduct(input); // Funktionen kör med input, som är ogiltigt
+		expect(actual).toBe(expected) // jämför med de som förväntades (false)
 	})
 
 })

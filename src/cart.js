@@ -1,52 +1,45 @@
 import { isCartItem, isProduct } from "./validation.js"
 
-/*
-Din uppgift:
-- skriv testfall för alla funktionerna nedan i cart.test.js (RED)
-- skriv kod här för att implementera funktionerna (GREEN)
-
-Tips:
-- börja med att identifiera VAD som ska testas.
-- om du testar t.ex. removeFromCart får du använda addToCart i början av testet. Den kommer nämligen ha sina egna tester
-
-*/
-// Din kod börjar här
-// Du får en funktion att börja med
-
 let cart = []
 let idCounter = 2002
 
-// Returnerar hur många produkter som finns i varukorgen ( räknar längden på listan cart)
+// Den här funktionen räknar hur många produkter som finns i kundvagnen.
+// Returnerar ett nummer, t.ex. 0 om den är tom, eller 3 om tre produkter har lagts till.
 function getCartItemCount() {
-	return  cart.length; //Räknar hur många saker som är ligger i listan
+	return  cart.length; // Räknar hur många saker som är ligger i listan
 }
 
+// Den här funktionen lägger till en produkt i kundvagnen.
+// Produkten måste ha id, namn och pris – annars läggs den inte till.
 function addToCart(newItem) {
-	//Kollar om de man försöker lägga till är en giltig produkt 
+	
+	// Kollar om de man försöker lägga till är en giltig produkt 
 	if( !isProduct(newItem) ) {
 		return false
 	}
-	const newId = idCounter //Sparar det nuvarande id-numret (för de nya objekten) Anvönds dock inte för tillfället!
+	const newId = idCounter // Sparar det nuvarande id-numret (för de nya objekten) Anvönds dock inte för tillfället!
 
 	// Kollar om produkten redan finns i varukorgen (baserat på produktens id)
-	const index = cart.findIndex(ci => ci.item.id === newItem.id)
+	const index = cart.findIndex(ci => ci.item.id === newItem.id) // ci betyder "cart item" – alltså en vara i kundvagnen
 	// Om produkten inte finns i varukorgen, - skapa ett nytt objekt för varukorgen
 	if( index === -1 ) {
 		const cartItem = { id: idCounter, amount: 1, item: newItem } //Amount ligger på 1 eftersom att det är första gången
-		idCounter++ //Ökar id:ets nummer så att nästa produkt kan få ett unikt id
+		idCounter++ // Ökar id:ets nummer så att nästa produkt kan få ett unikt id
 		cart.push(cartItem) //Lägger till produkten i varukorgen
 	} else {
 		cart[index].amount++ // Om produkten redan finns i varukorgen, då ökar man bara antalet 
 	}
 }
 
-
+// Den här funktionen hämtar ett objekt från varukorgen beroende på vilket nummer (index) det har i listan
+// T.ex. index 0 hämtar första produkten, index 1 hämtar den andra, osv.
 function getItem(index) {
 	//Hämtar ett objekt från varukorgen baserat på vilket nummer (index) de har i listan
 	return cart[index];
 }
 
-
+// Den här funktionen räknar ihop det totala värdet av alla produkter i kundvagnen.
+// Den tar hänsyn till produktens pris och hur många av varje som finns.
 function getTotalCartValue() {
 	let total = 0 //Startar värdet med 0
 
@@ -60,7 +53,8 @@ function getTotalCartValue() {
 }
 
 
-//Tar bort en en produkt från varukorgen med hjälp av id eller då itemId
+// Den här funktionen tar bort en produkt från kundvagnen med hjälp av dess unika cart-id.
+// Returnerar true om borttagningen lyckas, annars false.
 function removeFromCart(itemId) {
 	// Letar upp vart i varukorgen som produkten finns 
 	const index = cart.findIndex(item => item.id === itemId)
@@ -75,7 +69,8 @@ function removeFromCart(itemId) {
 }
 
 
-
+// Den här funktionen ändrar antalet av en viss produkt i kundvagnen.
+// Om man sätter antal till 0 tas produkten bort. Returnerar true om det funkade, annars false.
 function editCart(itemId, newValues) {
 	// Hittar index för produkten i varukorgen baserat på produktens unika id
 	const index = cart.findIndex(item => item.id === itemId)
@@ -87,7 +82,7 @@ function editCart(itemId, newValues) {
 
 	// Om antalet sätts till 0, ta bort produkten från varukorgen 
 	if (newValues.amount === 0) {
-		cart.splice(index, 1) //Tar bort ett objekt från listan vid indexet
+		cart.splice(index, 1) // Tar bort objektet från listan på rätt plats (index)
 		return true
 
 	// Om antalet är mer än 0, uppdatera mängden (amount) på produkten
@@ -95,13 +90,16 @@ function editCart(itemId, newValues) {
 		cart[index].amount = newValues.amount // Ändrar antalet produkter till de nya värdet
 		return true
 	} 
+	
 	// Returnera false om allt där ovan inte är uppfylt (en säkerhetåtgärd ifall ingen av de ovan är uppfyllda)
+
 	return false // Returnera false om amount är ogiltigt, t.ex. negativt tal eller om det inte finns (undefined)
 
 }
 
 
-// Tömmer varukorgen genom att sätta den till en tom Array
+// Den här funktionen tömmer hela kundvagnen, allt rensas bort och de sätts till en tom Array
+// Efter den här körts ska det vara 0 produkter kvar. 
 function clearCart() {
 	cart = []; //Tom Array
 }
