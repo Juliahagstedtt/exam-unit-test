@@ -15,6 +15,10 @@ const exampleCartObject = {
 	item: exampleProduct
 }
 
+
+// Här behövs inte beforeEach eftersom testerna bara testar enskilda funktioner med färdiga exempel,
+// och inget sparas eller påverkar andra tester.
+
 // Tester för funktionen isCartItem, kontrollerar om ett objekt är en giltig kundvagnsvara
 describe('isCartItem', () => {
 

@@ -1,7 +1,8 @@
 // importera här
 import { getCartItemCount, addToCart, getItem, getTotalCartValue, removeFromCart, editCart, clearCart } from "../cart"
 
-
+// beforeEach används här för att rensa kundvagnen innan varje test körs,
+// så att testerna inte påverkar varandra. Annars kan en vara som lagts till i ett test ligga kvar i nästa.
 describe('Cart', () => {
 	beforeEach(() => {
 		// Denna kod körs före varje test. Det är för att rensa kundvagnen, så inte saker ligger kvar från föregående test.
@@ -38,7 +39,7 @@ describe('Cart', () => {
 		// Testar att funktionen visar rätt antal när vi har lagt till något
 		test('returnerar antal produkter i varukorgen', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
-			addToCart(produkt) //Lägger till produkt i varukorgen
+			addToCart(produkt) // Lägger till produkt i varukorgen
 
 			const expected = 1; // Lades till en produkt 
 			const actual = getCartItemCount(); // Hämtar antal produkter i varukorgen 
@@ -59,7 +60,7 @@ describe('Cart', () => {
 			expect(result.item).toEqual(produkt) // Kontroll att produkten som hämtas är exakt den som tidigare lades till varukorgen
 		})
 
-		// Testar att man får undefined om man försöker hämta något som inte finns
+		// Testar att man får undefined om man försöker hämta något som inte finns (att inget hittades)
 		test('returnerar undefined om index inte finns', () => {
 			const result = getItem(21) // Försöker hämta ett objekt från ett index som inte existerar
 			expect(result).toBeUndefined() // Förväntar resultatet att vara undefined eftersom att indexet är ogiltigt
