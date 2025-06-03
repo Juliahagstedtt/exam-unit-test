@@ -13,13 +13,15 @@ function getCartItemCount() {
 }
 
 // Den här funktionen lägger till en produkt i kundvagnen.
-// Produkten måste ha id, namn och pris – annars läggs den inte till.
+// Produkten måste ha id, namn och pris, annars läggs den inte till.
 function addToCart(newItem) {
 	
-	// Kollar om de man försöker lägga till är en giltig produkt 
+	// Kollar om produkten man försöker lägga till är giltig
+	// Om inte, kasta ett fel (throw) som tydligt säger att produkten är ogiltig
 	if( !isProduct(newItem) ) {
-		return false
+		  throw new Error("Ogiltig produkt"); // Produkten saknar t.ex. namn, id eller pris
 	}
+
 	const newId = idCounter // Sparar det nuvarande id-numret (för de nya objekten) Anvönds dock inte för tillfället!
 
 	// Kollar om produkten redan finns i varukorgen (baserat på produktens id)
@@ -30,7 +32,7 @@ function addToCart(newItem) {
 	if( index === -1 ) {
 		const cartItem = { id: idCounter, amount: 1, item: newItem } //Amount ligger på 1 eftersom att det är första gången
 		idCounter++ // Ökar id:ets nummer så att nästa produkt kan få ett unikt id
-		cart.push(cartItem) //Lägger till produkten i varukorgen
+		cart.push(cartItem) // Lägger till produkten i varukorgen
 	} else {
 		cart[index].amount++ // Om produkten redan finns i varukorgen, då ökar man bara antalet 
 	}
@@ -84,10 +86,17 @@ function editCart(itemId, newValues) { // itemId är det unika ID som varje vara
 	// Hittar index för produkten i varukorgen baserat på produktens unika id
 	const index = cart.findIndex(item => item.id === itemId)
 	
-	// Returnera false om produkten inte finns i varukorgen
+	// Om produkten inte finns, kastas ett felmeddelande
 	if (index === -1) {
-		return false;
+		throw new Error("Produkten finns inte i kundvagnen");
 	}
+
+	// Kollar att newValues.amount finns och är ett positivt tal eller noll (alltså är de giltigt)
+	if (typeof newValues.amount !== 'number' || newValues.amount < 0) {
+		// Om amount saknas, är negativt eller något annat ogiltigt, kasta fel
+		throw new Error("Amount måste vara ett giltigt tal större än eller lika med 0");
+	}
+
 
 	// Om antalet sätts till 0, ta bort produkten från varukorgen 
 	if (newValues.amount === 0) {

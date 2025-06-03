@@ -1,4 +1,5 @@
 // importera här
+import { expect } from "playwright/test"
 import { getCartItemCount, addToCart, getItem, getTotalCartValue, removeFromCart, editCart, clearCart } from "../cart"
 
 // beforeEach används här för att rensa kundvagnen innan varje test körs,
@@ -21,6 +22,14 @@ describe('Cart', () => {
 		addToCart(input) // Lägger till produkten i varukorg 
 		const itemCountAfter = getCartItemCount() // Hämtar antalet produkter i varukorgen efter att produkten har lagts till
 		expect(itemCountAfter).toBe(itemCountBefore + 1) // Kontroll att antalet har ökat med 1
+	})
+	// Testar att addToCart kastar fel om produkten är ogiltig
+	test('kastar fel om produkten är ogiltig i addToCart', () => {
+		// Här skickas ett ogiltigt objekt in (som saknar name och price)
+		const ogiltig = { name: "saknar id och namn" }
+
+		// Förväntar att funktionen ska kasta ett felmeddelande eftersom produkten inte uppfyller kraven
+		expect(() => addToCart (ogiltig)).toThrow("Ogiltig produkt")
 	})
 
 	
@@ -71,10 +80,10 @@ describe('Cart', () => {
 	// Testar funktionen getTotalCartValue, som räknar ihop det totala värdet av kundvagnen.
 	describe('getTotalCartValue', () => {
 
-		// Testar att totalen blir rätt med en produkt
+		// Testar att totalvärdet blir rätt när en produkt ligger i varukorgen
 		test('visar det totala i varukorgen', () => {
 			const produkt = { id: 1003, name: 'snorkel', price: 12 } // Test produkt
-			addToCart(produkt) //Lägger till produkt i varukorgen
+			addToCart(produkt) // Lägger till produkt i varukorgen
 
 			const expected = 12; // Eftersom amount är 1 och priset är 12, blir totala värdet 12
 			const actual = getTotalCartValue(); // Hämtar de totala värdet från varukorgen
@@ -116,7 +125,7 @@ describe('Cart', () => {
 			const expected = false; // Förväntar false om produkten inte finns
 			const actual = removeFromCart(8989); // Försöker ta bort en produkt med ogiltig (icke existerande) id
 
-			expect(actual).toBe(expected) // Returnera false eftersom att inget togs bort 
+			expect(actual).toBe(expected) // Returnerar false eftersom produkten inte finns i varukorgen och därför inte kan tas bort
 		})
 	})
 
@@ -150,12 +159,24 @@ describe('Cart', () => {
 			expect(actual).toBe(expected) // Förväntar att produkten tas bort
 		})
 
-		// Testar att returnera false om produkten inte finns
-		test('returnerar false om produkten inte finns', () => {
-			const expected = false;
-			const actual = editCart(8989, { amount: 10 }); //Testar med ett ogiltigt id exempel
-			expect(actual).toBe(expected) // Förväntar false eftersom att produkten inte finns
-		})
+		// Testar att editCart kastar fel om produkten inte finns i varukorgen	
+		test('kastar fel om produkten inte finns', () => {
+			// Använder ett ID som inte finns i kundvagnen
+			expect(() => editCart(8989, { amount: 1 })).toThrow("Produkten finns inte i kundvagnen");
+		});
+
+		// Testar att editCart kastar fel om amount är negativt eller ogiltigt (t.ex har negativa tal)
+		test('kastar fel om amount är negativt eller ogiltigt', () => {
+			const produkt = { id: 1003, name: 'snorkel', price: 12 }; // Giltig testprodukt
+			addToCart(produkt);  // Lägger till produkten i kundvagnen
+
+			const cartItem = getItem(0); // Hämtar produkten ur kundvagnen
+			const itemId = cartItem.id; // Hämtar produktens unika id i kundvagnen
+
+			// Testar två olika ogiltiga värden för amount som båda är negativa
+			expect(() => editCart(itemId, { amount: -2 })).toThrow("Amount måste vara ett giltigt tal större än eller lika med 0");
+			expect(() => editCart(itemId, { amount: -8989 })).toThrow("Amount måste vara ett giltigt tal större än eller lika med 0");
+		});
 	})
 
 
